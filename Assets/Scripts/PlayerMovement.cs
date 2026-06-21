@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] [Min(0)] private float jumpForce = 1;
     [SerializeField] [Min(0)] private float gravity = 1;
 
-    [SerializeField] private Transform playerModel;
+    [SerializeField] private Transform rotator;
     [SerializeField] private CharacterController characterController;
 
     private Vector3 velocity;
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
             velocity -= gravityVector;
         }
         characterController.Move(velocity * Time.deltaTime);
-        playerModel.LookAt(playerModel.position + MoveVector3);
+        rotator.LookAt(rotator.position + MoveVector3);
     }
 
     #region Input Events
