@@ -1,0 +1,8 @@
+Hello this is a test
+|If you see this then it works (probably)
+|I wonder what happens
+when i do this?
+|backslash \n nnnnnn| text behind the divider
+|<color=red> ooooh, scary
+|<<> symbols >
+|The last text
