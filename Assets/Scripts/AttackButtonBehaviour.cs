@@ -6,22 +6,22 @@ using UnityEngine.UI;
 
 public class AttackButtonBehaviour : MonoBehaviour
 {
-    [SerializeField] private AttackObject _attackObject;
+    [SerializeField] private MoveObject moveObject;
     [SerializeField] private TextMeshProUGUI text;
 
     private void Awake()
     {
-        if (_attackObject == null)
+        if (moveObject == null)
         {
             Debug.LogWarning("No attackObject assigned", this);
             return;
         }
 
-        text.text = _attackObject.title;
+        text.text = moveObject.title;
     }
 
     public void OnButtonClick()
     {
-        CombatManager.instance.ExcecuteAttack(_attackObject);
+        CombatManager.instance.SelectMove(moveObject, FindAnyObjectByType<PlayerCombatantBehaviour>());
     }
 }

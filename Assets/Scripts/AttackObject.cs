@@ -1,21 +1,8 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AttackObject", menuName = "Scriptable Objects/AttackObject")]
-public class AttackObject : ScriptableObject
+public class AttackObject : MoveObject
 {
-    public enum AttackType
-    {
-        Enemy,
-        Enemies,
-        Self,
-        Ally,
-        Party,
-        All
-    }
-    
-    public string title;
-    public AttackType type;
     public int damage;
-    public int cost;
-    public int accuracy;
+    [Range(0, 100)] public int accuracy = 100;
 }
