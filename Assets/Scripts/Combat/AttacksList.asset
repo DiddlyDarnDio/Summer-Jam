@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b1ddb039401dd49bd7d75cc42477b5, type: 3}
-  m_Name: AttackObject
-  m_EditorClassIdentifier: Assembly-CSharp::AttackObject
-  title: 
-  target: 0
-  cost: 0
-  damage: 0
-  accuracy: 0
+  m_Script: {fileID: 11500000, guid: 055ca22027f3bf64ab2c75eb95398465, type: 3}
+  m_Name: AttacksList
+  m_EditorClassIdentifier: Assembly-CSharp::AttackListObject
+  AttackObjects:
+  - {fileID: 11400000, guid: 95fbdb137de59744aaf138c21f69118a, type: 2}

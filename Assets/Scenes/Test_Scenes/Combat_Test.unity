@@ -2024,7 +2024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53e26865ec315f47940a41f4d38fe3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackButtonBehaviour
-  _attackObject: {fileID: 11400000, guid: bb19137636000914989d86f88024e8ef, type: 2}
+  moveObject: {fileID: 11400000, guid: 95fbdb137de59744aaf138c21f69118a, type: 2}
   text: {fileID: 2083322023}
 --- !u!114 &1342844354
 MonoBehaviour:
@@ -2074,6 +2074,30 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: AttackButtonBehaviour, Assembly-CSharp
         m_MethodName: OnButtonClick
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1119948045}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1305225423}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3173,7 +3197,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   healthText: {fileID: 1475303686}
-  maxHealth: 100
+  combatStats:
+    maxHP: 100
+    hp: 0
+    maxMP: 20
+    mp: 0
+    atk: 10
+    def: 5
 --- !u!1 &2044095866
 GameObject:
   m_ObjectHideFlags: 0
@@ -4030,8 +4060,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombatantBehaviour
   playerStatus: {fileID: 11400000, guid: ac005695b4c65c544b80830fa2e43016, type: 2}
-  playerHealth: {fileID: 1838596668}
-  playerMana: {fileID: 1651002695}
+  playerHPText: {fileID: 0}
+  playerMPText: {fileID: 0}
+  resetOnStart: 1
 --- !u!1 &6598123527910397351
 GameObject:
   m_ObjectHideFlags: 0
