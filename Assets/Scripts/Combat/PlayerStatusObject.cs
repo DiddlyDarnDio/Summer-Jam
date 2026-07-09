@@ -8,7 +8,7 @@ public class PlayerStatusObject : ScriptableObject
 
     public void ResetStats()
     {
-        
+        combatStats.ResetStats();
     }
 
     public void ResetHP()

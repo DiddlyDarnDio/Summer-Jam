@@ -14,16 +14,27 @@ public class EnemyCombatantBehaviour : CombatantBehaviour
 
     private void OnEnable()
     {
-        combatStats.onHPChanged += TakeDamage;
+        combatStats.onHPChanged += OnHPChanged;
+    }
+
+    private void OnDisable()
+    {
+        combatStats.onHPChanged -= OnHPChanged;
     }
 
     private void Start()
     {
         combatStats.HP = combatStats.maxHP;
+        healthText.text = $"HP: {combatStats.HP}/{combatStats.maxHP}";
     }
 
     public override void TakeDamage(int damage)
     {
         combatStats.HP -= damage;
+    }
+    
+    private void OnHPChanged(int value)
+    {
+        healthText.text = $"HP: {combatStats.HP}/{combatStats.maxHP}";
     }
 }

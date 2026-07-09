@@ -26,12 +26,24 @@ public class PlayerCombatantBehaviour : CombatantBehaviour
         playerHPText.text = $"HP: {playerStatus.combatStats.HP}/{playerStatus.combatStats.maxHP}";
         playerMPText.text = $"MP: {playerStatus.combatStats.MP}/{playerStatus.combatStats.maxMP}";
     }
+    
+    private void OnEnable()
+    {
+        CombatStats.onHPChanged += OnHPChanged;
+        CombatStats.onMPChanged += OnMPChanged;
+    }
+
+    private void OnDisable()
+    {
+        CombatStats.onHPChanged -= OnHPChanged;
+        CombatStats.onMPChanged -= OnMPChanged;
+    }
     public override void TakeDamage(int damage)
     {
         playerStatus.combatStats.HP -= damage;
     }
 
-    private void onHPChanged(int value)
+    private void OnHPChanged(int value)
     {
         playerHPText.text = $"HP: {playerStatus.combatStats.HP}/{playerStatus.combatStats.maxHP}";
     }

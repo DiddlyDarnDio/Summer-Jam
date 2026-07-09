@@ -10,8 +10,14 @@ public class CombatStats
     [SerializeField] private int hp;
     public int maxMP = 20;
     [SerializeField] private int mp;
-    [SerializeField] private int atk = 10;
-    [SerializeField] private int def = 5;
+    public int atk = 10;
+    public int def = 5;
+
+    public void ResetStats()
+    {
+        hp = maxHP;
+        mp = maxMP;
+    }
 
     public int HP
     {

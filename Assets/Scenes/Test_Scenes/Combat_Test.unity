@@ -3055,7 +3055,7 @@ GameObject:
   - component: {fileID: 1842526953}
   - component: {fileID: 1842526952}
   m_Layer: 0
-  m_Name: NPC test
+  m_Name: Enemy_Combat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4060,8 +4060,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombatantBehaviour
   playerStatus: {fileID: 11400000, guid: ac005695b4c65c544b80830fa2e43016, type: 2}
-  playerHPText: {fileID: 0}
-  playerMPText: {fileID: 0}
+  playerHPText: {fileID: 1838596668}
+  playerMPText: {fileID: 1651002695}
   resetOnStart: 1
 --- !u!1 &6598123527910397351
 GameObject:
