@@ -55,6 +55,11 @@ public abstract class CombatState
     {
         
     }
+
+    public virtual void EndTurn()
+    {
+        
+    }
 }
 
 public sealed class SetupCombatState : CombatState
@@ -111,7 +116,7 @@ public sealed class RandomMoveCombatState : CombatState
         }
         else if (move.target == MoveObject.MoveTarget.Ally)
         {
-            combatBehaviour.ExecuteTurn(move, combatBehaviour.enemyCombatants[Random.Range(0, combatBehaviour.enemyCombatants.Length)]);
+            combatBehaviour.ExecuteTurn(move, combatBehaviour.enemyCombatants[Random.Range(0, combatBehaviour.enemyCombatants.Count)]);
         }
         else if (move.target == MoveObject.MoveTarget.Party)
         {
@@ -180,6 +185,11 @@ public sealed class SelectMoveCombatState : CombatState
         }
         currentState.Enter();
     }
+
+    public override void Exit()
+    {
+        combatBehaviour.playerCombatant.SelectButtons.SetActive(false);
+    }
 }
 
 public sealed class SelectTargetCombatState : CombatState
@@ -195,8 +205,13 @@ public sealed class SelectTargetCombatState : CombatState
         combatBehaviour.playerCombatant.BackButtons.SetActive(true);
         if (move.target == MoveObject.MoveTarget.Enemy)
         {
+            if (combatBehaviour.enemyCombatants.Count == 1)
+            {
+                combatBehaviour.ExecuteTurn(move, combatBehaviour.enemyCombatants[0]);
+            }
             foreach (EnemyCombatantBehaviour enemyCombatantBehaviour in combatBehaviour.enemyCombatants)
             {
+                combatBehaviour.tempMove = move;
                 enemyCombatantBehaviour.targetButton.SetActive(true);
             }
         }
@@ -231,6 +246,7 @@ public sealed class SelectTargetCombatState : CombatState
 
     public override void Exit()
     {
+        combatBehaviour.tempMove = null;
         combatBehaviour.playerCombatant.BackButtons.SetActive(true);
         foreach (EnemyCombatantBehaviour enemyCombatantBehaviour in combatBehaviour.enemyCombatants)
         {
@@ -258,6 +274,40 @@ public sealed class ExecuteTurnCombatState : CombatState
                 combatantBehaviour.TakeDamage(attack.damage);
             }
         }
+        combatBehaviour.EndTurn();
+    }
+}
+
+public sealed class EndTurnCombatState : CombatState
+{
+    public EndTurnCombatState(CombatBehaviour combatBehaviour) : base(combatBehaviour)
+    {
+        
+    }
+
+    public override void Enter()
+    {
+        if (!combatBehaviour.playerCombatant.IsAlive)
+        {
+            Debug.LogWarning("Make something happen when player is dead");
+            //todo plaayer is dead
+        }
+
+        if (!combatBehaviour.AnyEnemyAlive)
+        {
+            Debug.LogWarning("All enemies dead, do something");
+            //todo all enemies dead
+        }
+        CombatantBehaviour currentCombatant = combatBehaviour.combatantQueue.Dequeue();
+        combatBehaviour.combatantQueue.Enqueue(currentCombatant);
+        
+        while (!combatBehaviour.combatantQueue.Peek().IsAlive)
+        {
+            currentCombatant = combatBehaviour.combatantQueue.Dequeue();
+            combatBehaviour.combatantQueue.Enqueue(currentCombatant);
+        }
+        
+        combatBehaviour.Play();
     }
 }
 
@@ -266,7 +316,7 @@ public sealed class PlayCombatState : CombatState
     public SelectMoveCombatState selectMoveCombatState;
     public SelectTargetCombatState selectTargetCombatState;
     public ExecuteTurnCombatState executeTurnCombatState;
-    //todo end turn state?
+    public EndTurnCombatState endTurnCombatState;
 
     private CombatState currentState;
 
@@ -275,6 +325,7 @@ public sealed class PlayCombatState : CombatState
         selectMoveCombatState = new SelectMoveCombatState(combatBehaviour);
         selectTargetCombatState = new SelectTargetCombatState(combatBehaviour);
         executeTurnCombatState = new ExecuteTurnCombatState(combatBehaviour);
+        endTurnCombatState = new EndTurnCombatState(combatBehaviour);
     }
     
     public void Transit(CombatState toState)
@@ -313,9 +364,9 @@ public sealed class PlayCombatState : CombatState
         Transit(executeTurnCombatState);
     }
 
-    public override void TurnPhaseDone()
+    public override void EndTurn()
     {
-        currentState.TurnPhaseDone();
+        Transit(endTurnCombatState);
     }
 }
 
@@ -364,9 +415,9 @@ public sealed class GameCombatState : CombatState
         currentState.ExecuteTurn(moveObject, targets);
     }
 
-    public override void TurnPhaseDone()
+    public override void EndTurn()
     {
-        currentState.TurnPhaseDone();
+        currentState.EndTurn();
     }
 
     public override void Play()
@@ -422,5 +473,10 @@ public sealed class RootCombatState : CombatState
     public override void Play()
     {
         gameCombatState.Play();
+    }
+
+    public override void EndTurn()
+    {
+        gameCombatState.EndTurn();
     }
 }

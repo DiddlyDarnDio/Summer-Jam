@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -11,13 +12,30 @@ public class CombatBehaviour : MonoBehaviour
     [SerializeField] private GameObject attackButtons;
     [SerializeField] private GameObject spellButtons;
     public PlayerCombatantBehaviour playerCombatant;
-    public EnemyCombatantBehaviour[] enemyCombatants;
+    public List<EnemyCombatantBehaviour> enemyCombatants = new List<EnemyCombatantBehaviour>();
     public Queue<CombatantBehaviour> combatantQueue = new Queue<CombatantBehaviour>();
+    public MoveObject tempMove;
+
+    public bool AnyEnemyAlive
+    {
+        get
+        {
+            foreach (EnemyCombatantBehaviour enemyCombatant in enemyCombatants)
+            {
+                if (enemyCombatant.IsAlive)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
 
     private void Awake()
     {
         playerCombatant = FindAnyObjectByType<PlayerCombatantBehaviour>();
-        enemyCombatants = FindObjectsByType<EnemyCombatantBehaviour>(FindObjectsSortMode.None);
+        enemyCombatants = FindObjectsByType<EnemyCombatantBehaviour>().ToList();
         combatantQueue.Enqueue(playerCombatant);
         foreach (EnemyCombatantBehaviour enemyCombatant in enemyCombatants)
         {
@@ -90,6 +108,11 @@ public class CombatBehaviour : MonoBehaviour
         rootState.SelectTarget(move);
     }
 
+    public void ExecuteTurn(CombatantBehaviour target)
+    {
+        ExecuteTurn(tempMove, target);
+    }
+
     public void ExecuteTurn(MoveObject move, CombatantBehaviour target)
     {
         List<CombatantBehaviour> targets = new List<CombatantBehaviour>();
@@ -104,17 +127,7 @@ public class CombatBehaviour : MonoBehaviour
 
     public void EndTurn()
     {
-        CombatantBehaviour currentCombatant = combatantQueue.Dequeue();
-        if (currentCombatant.IsAlive)
-        {
-            combatantQueue.Enqueue(currentCombatant);
-        }
-
-        while (!combatantQueue.Peek().IsAlive)
-        {
-            combatantQueue.Dequeue();
-        }
-        Play();
+        rootState.EndTurn();
     }
 
     public void Play()
