@@ -208,6 +208,7 @@ public sealed class SelectTargetCombatState : CombatState
             if (combatBehaviour.enemyCombatants.Count == 1)
             {
                 combatBehaviour.ExecuteTurn(move, combatBehaviour.enemyCombatants[0]);
+                return;
             }
             foreach (EnemyCombatantBehaviour enemyCombatantBehaviour in combatBehaviour.enemyCombatants)
             {
@@ -247,7 +248,7 @@ public sealed class SelectTargetCombatState : CombatState
     public override void Exit()
     {
         combatBehaviour.tempMove = null;
-        combatBehaviour.playerCombatant.BackButtons.SetActive(true);
+        combatBehaviour.playerCombatant.BackButtons.SetActive(false);
         foreach (EnemyCombatantBehaviour enemyCombatantBehaviour in combatBehaviour.enemyCombatants)
         {
             enemyCombatantBehaviour.targetButton.SetActive(false);
