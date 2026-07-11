@@ -22,6 +22,6 @@ public class AttackButtonBehaviour : MonoBehaviour
 
     public void OnButtonClick()
     {
-        CombatManager.instance.SelectMove(moveObject, FindAnyObjectByType<PlayerCombatantBehaviour>());
+        CombatBehaviour.instance.SelectTarget(moveObject);
     }
 }

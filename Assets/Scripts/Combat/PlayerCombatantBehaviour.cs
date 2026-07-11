@@ -7,6 +7,8 @@ public class PlayerCombatantBehaviour : CombatantBehaviour
     public PlayerStatusObject playerStatus;
     public TextMeshProUGUI playerHPText;
     public TextMeshProUGUI playerMPText;
+    public GameObject SelectButtons;
+    public GameObject BackButtons;
     public bool resetOnStart = false;
 
     public override CombatStats CombatStats
@@ -17,7 +19,7 @@ public class PlayerCombatantBehaviour : CombatantBehaviour
         }
     }
 
-    private void Awake()
+    public override void Initialize()
     {
         if (resetOnStart)
         {
