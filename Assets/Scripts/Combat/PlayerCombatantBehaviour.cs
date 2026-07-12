@@ -27,6 +27,8 @@ public class PlayerCombatantBehaviour : CombatantBehaviour
         }
         playerHPText.text = $"HP: {playerStatus.combatStats.HP}/{playerStatus.combatStats.maxHP}";
         playerMPText.text = $"MP: {playerStatus.combatStats.MP}/{playerStatus.combatStats.maxMP}";
+        SelectButtons.SetActive(false);
+        BackButtons.SetActive(false);
     }
     
     private void OnEnable()
@@ -39,10 +41,6 @@ public class PlayerCombatantBehaviour : CombatantBehaviour
     {
         CombatStats.onHPChanged -= OnHPChanged;
         CombatStats.onMPChanged -= OnMPChanged;
-    }
-    public override void TakeDamage(int damage)
-    {
-        playerStatus.combatStats.HP -= damage;
     }
 
     private void OnHPChanged(int value)

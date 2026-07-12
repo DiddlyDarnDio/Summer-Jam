@@ -175,6 +175,7 @@ public sealed class SelectMoveCombatState : CombatState
 
     public override void Enter()
     {
+        combatBehaviour.combatantQueue.Peek().IsDefending = false;
         if (combatBehaviour.combatantQueue.Peek() is PlayerCombatantBehaviour)
         {
             currentState = humanMoveCombatState;
@@ -195,6 +196,7 @@ public sealed class SelectMoveCombatState : CombatState
 public sealed class SelectTargetCombatState : CombatState
 {
     public MoveObject move;
+    public CombatantBehaviour user;
     public SelectTargetCombatState(CombatBehaviour combatBehaviour) : base(combatBehaviour)
     {
         
@@ -202,6 +204,12 @@ public sealed class SelectTargetCombatState : CombatState
 
     public override void Enter()
     {
+        if (combatBehaviour.combatantQueue.Peek().CombatStats.MP < move.cost)
+        {
+            SelectMove();
+            //todo make something happen when you can't afford the move
+            return;
+        }
         combatBehaviour.playerCombatant.BackButtons.SetActive(true);
         if (move.target == MoveObject.MoveTarget.Enemy)
         {
@@ -268,14 +276,15 @@ public sealed class ExecuteTurnCombatState : CombatState
 
     public override void Enter()
     {
-        if (move is AttackObject attack)
-        {
-            foreach (CombatantBehaviour combatantBehaviour in targets)
-            {
-                combatantBehaviour.TakeDamage(attack.damage);
-            }
-        }
+        move.PerformMove(combatBehaviour.combatantQueue.Peek(), targets);
+        
         combatBehaviour.EndTurn();
+    }
+
+    public override void Exit()
+    {
+        move = null;
+        targets = null;
     }
 }
 

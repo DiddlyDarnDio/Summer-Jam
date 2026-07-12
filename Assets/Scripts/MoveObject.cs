@@ -1,7 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 //[CreateAssetMenu(fileName = "AttackObject", menuName = "Scriptable Objects/AttackObject")]
-public class MoveObject : ScriptableObject
+public abstract class MoveObject : ScriptableObject
 {
     public enum MoveTarget
     {
@@ -16,4 +17,9 @@ public class MoveObject : ScriptableObject
     public string title;
     public MoveTarget target;
     public int cost;
+
+    public virtual void PerformMove(CombatantBehaviour user, List<CombatantBehaviour> targets)
+    {
+        Debug.LogWarning("Move not implemented");
+    }
 }

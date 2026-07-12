@@ -30,11 +30,6 @@ public class EnemyCombatantBehaviour : CombatantBehaviour
     {
         combatStats.onHPChanged -= OnHPChanged;
     }
-
-    public override void TakeDamage(int damage)
-    {
-        combatStats.HP -= damage;
-    }
     
     private void OnHPChanged(int value)
     {

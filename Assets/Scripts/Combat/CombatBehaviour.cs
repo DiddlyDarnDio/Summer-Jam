@@ -8,9 +8,7 @@ public class CombatBehaviour : MonoBehaviour
 {
     private CombatState rootState;
     public static CombatBehaviour instance;
-    [SerializeField] private GameObject buttonLayer1;
     //[SerializeField] private GameObject attackButtons;
-    [SerializeField] private GameObject spellButtons;
     public PlayerCombatantBehaviour playerCombatant;
     public List<EnemyCombatantBehaviour> enemyCombatants = new List<EnemyCombatantBehaviour>();
     public Queue<CombatantBehaviour> combatantQueue = new Queue<CombatantBehaviour>();
@@ -44,9 +42,7 @@ public class CombatBehaviour : MonoBehaviour
         rootState = new RootCombatState(this);
         rootState.Enter();
         instance = this;
-        buttonLayer1.SetActive(true);
         //attackButtons.SetActive(false);
-        spellButtons.SetActive(false);
     }
 
     /*public void ExcecuteMove(MoveObject moveObject, CombatantBehaviour target)
