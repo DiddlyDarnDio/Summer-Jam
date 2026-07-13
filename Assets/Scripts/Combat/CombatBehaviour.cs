@@ -8,10 +8,11 @@ public class CombatBehaviour : MonoBehaviour
 {
     private CombatState rootState;
     public static CombatBehaviour instance;
-    //[SerializeField] private GameObject attackButtons;
     public PlayerCombatantBehaviour playerCombatant;
     public List<EnemyCombatantBehaviour> enemyCombatants = new List<EnemyCombatantBehaviour>();
     public Queue<CombatantBehaviour> combatantQueue = new Queue<CombatantBehaviour>();
+    public EnemySpawnerContainerObject EnemySpawnerContainerObject;
+    public List<Transform> enemySpawnLocations = new List<Transform>();
     public MoveObject tempMove;
 
     public bool AnyEnemyAlive
@@ -32,6 +33,10 @@ public class CombatBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        for (int i = 0; i < EnemySpawnerContainerObject.enemies.Count; i++)
+        {
+            Instantiate(EnemySpawnerContainerObject.enemies[i], enemySpawnLocations[i]);
+        }
         playerCombatant = FindAnyObjectByType<PlayerCombatantBehaviour>();
         enemyCombatants = FindObjectsByType<EnemyCombatantBehaviour>().ToList();
         combatantQueue.Enqueue(playerCombatant);

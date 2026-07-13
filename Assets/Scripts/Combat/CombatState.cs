@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class CombatState
 {
@@ -307,6 +308,7 @@ public sealed class EndTurnCombatState : CombatState
         {
             Debug.LogWarning("All enemies dead, do something");
             //todo all enemies dead
+            SceneManager.LoadScene("Wilmer_TestScene");
         }
         CombatantBehaviour currentCombatant = combatBehaviour.combatantQueue.Dequeue();
         combatBehaviour.combatantQueue.Enqueue(currentCombatant);

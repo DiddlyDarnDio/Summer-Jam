@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     public char divider = '|';
     public float typeDelay = 0.2f;
     private bool isTyping;
+    public UnityEvent OnDialogueEnd;
 
     private bool HasNextSentence
     {
@@ -90,5 +92,6 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.SetActive(false);
         StopAllCoroutines();
         isTyping = false;
+        OnDialogueEnd?.Invoke();
     }
 }

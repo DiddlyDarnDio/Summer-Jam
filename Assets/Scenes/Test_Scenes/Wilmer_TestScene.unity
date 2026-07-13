@@ -436,6 +436,9 @@ MonoBehaviour:
   dialogueText: {fileID: 1704053383}
   divider: 124
   typeDelay: 0.05
+  OnDialogueEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &745829533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -820,6 +823,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1169003180}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1243464423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1243464424}
+  m_Layer: 0
+  m_Name: CombatTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1243464424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243464423}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1366127332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,6 +1334,7 @@ GameObject:
   - component: {fileID: 1877134479}
   - component: {fileID: 1877134478}
   - component: {fileID: 1877134477}
+  - component: {fileID: 1877134483}
   - component: {fileID: 1877134482}
   m_Layer: 0
   m_Name: NPC test
@@ -1323,13 +1358,13 @@ MonoBehaviour:
   interactEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 745829532}
-        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-        m_MethodName: StartDialogue
-        m_Mode: 2
+      - m_Target: {fileID: 1877134483}
+        m_TargetAssemblyTypeName: EnemyOverworldBehaviour, Assembly-CSharp
+        m_MethodName: TransitionToCombat
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4900000, guid: 3d58840a32044661a153863c3e588ad2, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.TextAsset, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1458,6 +1493,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1877134483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877134476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db689b8ae7da8c64989e76bf6d56a0cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyOverworldBehaviour
+  enemies:
+  - {fileID: 3145943289313188755, guid: 64d2df7dedaa3ee499185a62126e09e8, type: 3}
+  enemiesContainer: {fileID: 11400000, guid: 14af5a73182003e48b37e8f41cee738a, type: 2}
 --- !u!1 &1998417639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1647,6 +1697,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4204961245373201371, guid: 1291036f426a66d488350ff0acffa7ce, type: 3}
+      propertyPath: playerLocationSaver
+      value: 
+      objectReference: {fileID: 11400000, guid: a69344404e7569540beba28f40008fbc, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1663,3 +1717,4 @@ SceneRoots:
   - {fileID: 535528698}
   - {fileID: 745829536}
   - {fileID: 252289273}
+  - {fileID: 1243464424}
