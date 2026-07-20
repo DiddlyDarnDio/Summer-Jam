@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b1ddb039401dd49bd7d75cc42477b5, type: 3}
   m_Name: AttackObject
   m_EditorClassIdentifier: Assembly-CSharp::AttackObject
-  title: 
+  title: Attack
   target: 0
   cost: 0
-  damage: 0
-  accuracy: 0
+  damage: 5
+  accuracy: 100

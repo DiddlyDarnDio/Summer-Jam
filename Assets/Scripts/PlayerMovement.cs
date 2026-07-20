@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform rotator;
     [SerializeField] private CharacterController characterController;
+    [SerializeField] private PlayerLocationSaverObject playerLocationSaver;
 
     private Vector3 velocity;
     private Vector2 moveVector;
@@ -27,6 +29,16 @@ public class PlayerMovement : MonoBehaviour
         get
         {
             return new Vector3(0, gravity);
+        }
+    }
+
+    private void Awake()
+    {
+        if (playerLocationSaver.doSetLocation)
+        {
+            playerLocationSaver.doSetLocation = false;
+            transform.position = playerLocationSaver.position;
+            transform.rotation = playerLocationSaver.rotation;
         }
     }
 
@@ -50,6 +62,13 @@ public class PlayerMovement : MonoBehaviour
         }
         characterController.Move(velocity * Time.deltaTime);
         rotator.LookAt(rotator.position + MoveVector3);
+    }
+
+    public void SavePlayerLocation()
+    {
+        playerLocationSaver.doSetLocation = true;
+        playerLocationSaver.position = transform.position;
+        playerLocationSaver.rotation = transform.rotation;
     }
 
     #region Input Events
